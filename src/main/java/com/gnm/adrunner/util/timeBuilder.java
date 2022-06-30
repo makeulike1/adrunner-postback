@@ -55,5 +55,18 @@ public class timeBuilder {
     public static String getTodayEndTime(){
         return new SimpleDateFormat("yyyy-MM-dd 23:59:59").format(Calendar.getInstance().getTime());
     }
+
+
+    // 유효한 시간 타입인지 확인
+    public static Boolean isValidDateTime(String inDate){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(inDate.trim());
+        } catch (ParseException pe) {
+            return false;
+        }
+        return true;
+    }
     
 }

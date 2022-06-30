@@ -3,6 +3,10 @@ package com.gnm.adrunner.server.controller.postback.app.cpa;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.gnm.adrunner.config.GlobalConstant;
@@ -26,6 +30,7 @@ import com.gnm.adrunner.server.repo.AdminLoginRepository;
 import com.gnm.adrunner.server.repo.AdsMediaRepository;
 import com.gnm.adrunner.server.repo.AdsRepository;
 
+import java.net.URLDecoder;
 
 
 
@@ -82,11 +87,24 @@ public class PostbackAppCpaController extends RequestResponseInterface{
         @RequestParam(value="event_value",required = false) String eventValue,
         @RequestParam(value="event_time",required = false) String eventTime,
         @RequestParam(value="event",required = false) String event,
-        HttpServletRequest request){
+        HttpServletRequest request) throws UnsupportedEncodingException{
 
 
 
             HttpHeaders responseHeaders = new HttpHeaders();
+
+            String DECODED_EVENT_TIME = URLDecoder.decode(eventTime, StandardCharsets.UTF_8.name());
+        
+
+            
+            // 이벤트 시간이 제대로 URL 인코딩 되지 않았을 때 218 에러
+            if(!timeBuilder.isValidDateTime(DECODED_EVENT_TIME)){
+                return ResponseEntity.status(218)
+                    .headers(responseHeaders)
+                    .body(getStatusMessage(218));
+            }
+
+            
 
  
             // 파라미터에 클릭키가 존재하지 않는 경우 206 에러
@@ -218,6 +236,8 @@ public class PostbackAppCpaController extends RequestResponseInterface{
                         .body(RequestResponseInterface.getStatusMessage(216));
 
                         
+
+
 
 
             // 매체사 비용 

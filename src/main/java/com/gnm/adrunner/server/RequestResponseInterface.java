@@ -26,6 +26,7 @@ public class RequestResponseInterface {
             case 215:return "파라미터로 들어온 시간이 유효한 포맷이 아닙니다.";
             case 216:return "광고가 일일 한도에 도달하였습니다.";
             case 217:return "더 이상 광고를 등록할 수 없습니다.";
+            case 218:return "이벤트 시간이 제대로 URL 인코딩 되지 않았습니다.";
             case 222:return "광고 종류와 맞지 않는 포스트백 요청입니다.";
             case 223:return "이벤트 이름은 필수로 입력해야 합니다.";
             case 224:return "이벤트 값은 필수로 입력해야 합니다.";
