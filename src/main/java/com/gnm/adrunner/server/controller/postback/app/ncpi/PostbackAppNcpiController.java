@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.gnm.adrunner.util.postbackURLBuilder;
 import com.gnm.adrunner.util.redisUtil;
+import com.gnm.adrunner.util.reqRemoteServer;
 import com.gnm.adrunner.util.timeBuilder;
 import com.gnm.adrunner.server.RequestResponseInterface;
 import com.gnm.adrunner.server.entity.Postback;
@@ -21,7 +22,6 @@ import com.gnm.adrunner.config.GlobalConstant;
 import com.gnm.adrunner.server.entity.Ads;
 import com.gnm.adrunner.server.entity.AdsMedia;
 import com.gnm.adrunner.server.entity.Media;
-import com.gnm.adrunner.server.entity.MediaParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -273,12 +273,13 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
             // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
             if(m.getIsPostback()){
-                
-                Iterable<MediaParam> list = mediaParamRepository.findByTypeAndMediaKey(0, mediaKey);
-                String url = postbackURLBuilder.build(list, p, m.getPostbackInstall(), ads.getAff());
-                System.out.println(url);
-                url = null;
-                list = null;
+                try{
+                    reqRemoteServer.requestGET(
+                        postbackURLBuilder.build(
+                            mediaParamRepository.findByTypeAndMediaKey(0, mediaKey), p, m.getPostbackInstall(), ads.getAff()));                
+                }catch(Exception e){
+
+                } 
             }
 
             m = null;
