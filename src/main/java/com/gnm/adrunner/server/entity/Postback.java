@@ -58,6 +58,16 @@ public class Postback {
 
     private Integer mediaCost;
 
+    private String  sP1;
+
+    private String  sP2;
+
+    private String  sP3;
+
+    private String  sP4;
+    
+    private String  sP5;
+
     private String  createtime;
 
     public Integer getId() {
@@ -244,6 +254,46 @@ public class Postback {
         this.mediaCost = mediaCost;
     }
 
+    public String getsP1() {
+        return sP1;
+    }
+
+    public void setsP1(String sP1) {
+        this.sP1 = sP1;
+    }
+
+    public String getsP2() {
+        return sP2;
+    }
+
+    public void setsP2(String sP2) {
+        this.sP2 = sP2;
+    }
+
+    public String getsP3() {
+        return sP3;
+    }
+
+    public void setsP3(String sP3) {
+        this.sP3 = sP3;
+    }
+
+    public String getsP4() {
+        return sP4;
+    }
+
+    public void setsP4(String sP4) {
+        this.sP4 = sP4;
+    }
+
+    public String getsP5() {
+        return sP5;
+    }
+
+    public void setsP5(String sP5) {
+        this.sP5 = sP5;
+    }
+
     public String getCreatetime() {
         return createtime;
     }
@@ -259,7 +309,8 @@ public class Postback {
                 + deviceId + ", eventName=" + eventName + ", eventTime=" + eventTime + ", eventValue=" + eventValue
                 + ", gaid=" + gaid + ", id=" + id + ", idfa=" + idfa + ", ip=" + ip + ", language=" + language
                 + ", mediaCost=" + mediaCost + ", mediaKey=" + mediaKey + ", model=" + model + ", network=" + network
-                + ", os=" + os + ", osVer=" + osVer + ", ptnPub=" + ptnPub + ", subPub=" + subPub + "]";
-    } 
-
+                + ", os=" + os + ", osVer=" + osVer + ", ptnPub=" + ptnPub + ", sP1=" + sP1 + ", sP2=" + sP2 + ", sP3="
+                + sP3 + ", sP4=" + sP4 + ", sP5=" + sP5 + ", subPub=" + subPub + "]";
+    }
+ 
 }

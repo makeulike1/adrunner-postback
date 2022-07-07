@@ -24,6 +24,9 @@ public interface MediaRepository extends CrudRepository<Media, Integer>{
     @Query(value="select id from media where media_key=?1", nativeQuery = true)
     public Integer findByMediaKey(String mediaKey);
     
+    @Query(value="select * from media where media_key=?1", nativeQuery = true)
+    public Media findByKey(String mediaKey);
+
     @Query(value="select * from media where id=?1", nativeQuery = true)
     public Media findByID(Integer id);
 

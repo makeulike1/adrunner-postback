@@ -13,12 +13,15 @@ import com.gnm.adrunner.config.GlobalConstant;
 import com.gnm.adrunner.server.RequestResponseInterface;
 import com.gnm.adrunner.server.entity.Ads;
 import com.gnm.adrunner.server.entity.AdsMedia;
+import com.gnm.adrunner.server.entity.Media;
+import com.gnm.adrunner.server.entity.MediaParam;
 import com.gnm.adrunner.server.entity.Postback;
 import com.gnm.adrunner.server.service.AdsMediaService;
 import com.gnm.adrunner.server.service.AdsService;
 import com.gnm.adrunner.server.service.PostbackService;
 import com.gnm.adrunner.server.service.LogAdsService;
 import com.gnm.adrunner.server.service.MemoryDataService;
+import com.gnm.adrunner.util.postbackURLBuilder;
 import com.gnm.adrunner.util.redisUtil;
 import com.gnm.adrunner.util.timeBuilder;
 
@@ -29,6 +32,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.gnm.adrunner.server.repo.AdminLoginRepository;
 import com.gnm.adrunner.server.repo.AdsMediaRepository;
 import com.gnm.adrunner.server.repo.AdsRepository;
+import com.gnm.adrunner.server.repo.MediaParamRepository;
+import com.gnm.adrunner.server.repo.MediaRepository;
 
 import java.net.URLDecoder;
 
@@ -62,31 +67,43 @@ public class PostbackAppCpaController extends RequestResponseInterface{
 
     @Autowired
     MemoryDataService memoryDataService;
+    
+    @Autowired
+    MediaRepository mediaRepository;
 
 
+    @Autowired
+    MediaParamRepository mediaParamRepository;
+
+
+    
     // 앱 CPA 포스트백
     @GetMapping("/postback/app/cpa") 
     public @ResponseBody ResponseEntity<String> appCPAPostback(
-        @RequestParam(value="click_key",required = false) String ck,
-        @RequestParam(value="ptn_pub",required = false) String ptn_pub,
-        @RequestParam(value="sub_pub",required = false) String sub_pub,
-        @RequestParam(value="os",required = false) String os,
-        @RequestParam(value="android_id",required = false) String androidId,
-        @RequestParam(value="device_id",required = false) String deviceId,
-        @RequestParam(value="gaid",required = false) String gaid,
-        @RequestParam(value="idfa",required = false) String idfa,
-        @RequestParam(value="carrier",required = false) String carrier,
-        @RequestParam(value="brand",required = false) String brand,
-        @RequestParam(value="model",required = false) String model,
+        @RequestParam(value="click_key",required = false, defaultValue = "") String ck,
+        @RequestParam(value="ptn_pub",required = false, defaultValue = "") String ptn_pub,
+        @RequestParam(value="sub_pub",required = false, defaultValue = "") String sub_pub,
+        @RequestParam(value="os",required = false, defaultValue = "") String os,
+        @RequestParam(value="android_id",required = false, defaultValue = "") String androidId,
+        @RequestParam(value="device_id",required = false, defaultValue = "") String deviceId,
+        @RequestParam(value="gaid",required = false, defaultValue = "") String gaid,
+        @RequestParam(value="idfa",required = false, defaultValue = "") String idfa,
+        @RequestParam(value="carrier",required = false, defaultValue = "") String carrier,
+        @RequestParam(value="brand",required = false, defaultValue = "") String brand,
+        @RequestParam(value="model",required = false, defaultValue = "") String model,
         @RequestParam(value="ip",required = false) String ip,
-        @RequestParam(value="os_ver",required = false) String os_ver,
-        @RequestParam(value="country",required = false) String country,
-        @RequestParam(value="language",required = false) String language,
-        @RequestParam(value="network",required = false) String network,
-        @RequestParam(value="event_name",required = false) String eventName,
-        @RequestParam(value="event_value",required = false) String eventValue,
-        @RequestParam(value="event_time",required = false) String eventTime,
-        @RequestParam(value="event",required = false) String event,
+        @RequestParam(value="os_ver",required = false, defaultValue = "") String os_ver,
+        @RequestParam(value="country",required = false, defaultValue = "") String country,
+        @RequestParam(value="language",required = false, defaultValue = "") String language,
+        @RequestParam(value="network",required = false, defaultValue = "") String network,
+        @RequestParam(value="event_name",required = false, defaultValue = "") String eventName,
+        @RequestParam(value="event_value",required = false, defaultValue = "") String eventValue,
+        @RequestParam(value="event_time",required = false, defaultValue = "") String eventTime,
+        @RequestParam(value="s_p1", required = false, defaultValue = "") String sP1,
+        @RequestParam(value="s_p2", required = false, defaultValue = "") String sP2,
+        @RequestParam(value="s_p3", required = false, defaultValue = "") String sP3,
+        @RequestParam(value="s_p4", required = false, defaultValue = "") String sP4,
+        @RequestParam(value="s_p5", required = false, defaultValue = "") String sP5,
         HttpServletRequest request) throws UnsupportedEncodingException{
 
 
@@ -267,7 +284,14 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setEventTime(eventTime);
             p.setAdvCost(ads.getCost2());
             p.setMediaCost(mediaCost);
+            p.setsP1(sP1);
+            p.setsP1(sP2);
+            p.setsP1(sP3);
+            p.setsP1(sP4);
+            p.setsP1(sP5);
             p.setCreatetime(timeBuilder.getCurrentTime());
+            
+            
             
     
 
@@ -291,6 +315,26 @@ public class PostbackAppCpaController extends RequestResponseInterface{
                     memoryDataService.updateMemoryData("ads-media", am.getId());
                 }
             }
+
+ 
+            // 해당 광고가 포스트백 송수신이 설정되어있다면 매체사로 포스트백
+            if(ads.getIsPostback()){
+                Media m     = mediaRepository.findByKey(mediaKey);
+
+                // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
+                if(m.getIsPostback()){
+                    
+                    Iterable<MediaParam> list = mediaParamRepository.findByTypeAndMediaKey(1, mediaKey);
+                    String url  = postbackURLBuilder.build(list, p, m.getPostbackInstall(), ads.getAff());
+                    System.out.println(url);
+                    
+                    m = null;
+                    url = null;
+                    list = null;
+                }
+            }
+
+
 
 
             p           =   null;
