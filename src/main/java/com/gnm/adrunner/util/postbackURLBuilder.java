@@ -28,6 +28,7 @@ public class postbackURLBuilder {
                 case "s_p4":        url = url.replace(mp.getParamKey(),   p.getS_p4());        break;
                 case "s_p5":        url = url.replace(mp.getParamKey(),   p.getS_p5());        break;
                 case "aff":         url = url.replace(mp.getParamKey(),   affId.toString());  break;
+                case "event_value": url = url.replace(mp.getParamKey(),   p.getEventValue());   break;
             }
         }
         
