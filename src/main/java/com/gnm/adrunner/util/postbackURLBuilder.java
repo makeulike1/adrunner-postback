@@ -22,11 +22,11 @@ public class postbackURLBuilder {
                 case "os_ver":      url = url.replace(mp.getParamKey(),   p.getOsVer());      break;
                 case "country":     url = url.replace(mp.getParamKey(),   p.getCountry());    break;
                 case "carrier":     url = url.replace(mp.getParamKey(),   p.getCarrier());    break;
-                case "s_p1":        url = url.replace(mp.getParamKey(),   p.getsP1());        break;
-                case "s_p2":        url = url.replace(mp.getParamKey(),   p.getsP2());        break;
-                case "s_p3":        url = url.replace(mp.getParamKey(),   p.getsP3());        break;
-                case "s_p4":        url = url.replace(mp.getParamKey(),   p.getsP4());        break;
-                case "s_p5":        url = url.replace(mp.getParamKey(),   p.getsP5());        break;
+                case "s_p1":        url = url.replace(mp.getParamKey(),   p.getS_p1());        break;
+                case "s_p2":        url = url.replace(mp.getParamKey(),   p.getS_p2());        break;
+                case "s_p3":        url = url.replace(mp.getParamKey(),   p.getS_p3());        break;
+                case "s_p4":        url = url.replace(mp.getParamKey(),   p.getS_p4());        break;
+                case "s_p5":        url = url.replace(mp.getParamKey(),   p.getS_p5());        break;
                 case "aff":         url = url.replace(mp.getParamKey(),   affId.toString());  break;
             }
         }

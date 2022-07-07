@@ -233,11 +233,11 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p.setEventTime("1111-11-11 11:11:11");
         p.setAdvCost(ads.getCost2());
         p.setMediaCost(mediaCost);
-        p.setsP1(sP1);
-        p.setsP1(sP2);
-        p.setsP1(sP3);
-        p.setsP1(sP4);
-        p.setsP1(sP5);
+        p.setS_p1(sP1);
+        p.setS_p2(sP2);
+        p.setS_p3(sP3);
+        p.setS_p4(sP4);
+        p.setS_p5(sP5);
         
 
 
