@@ -256,6 +256,8 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         Integer todayTotalPostbackCount = postbackService.countTodayTotalPostbackByAdsKeyAndMediaKey(adsKey, mediaKey);
 
 
+        System.out.println(adsDayLimit+":"+todayTotalPostbackCount);
+        
         // 일일 광고 한도에 도달함
         if(todayTotalPostbackCount.compareTo(adsDayLimit) >= 0){              
             if(adsDayLimit != -1){
