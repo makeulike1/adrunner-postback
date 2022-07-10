@@ -51,6 +51,9 @@ public class PostbackService {
         Root<Postback> root = query.from(Postback.class);
         query.select(criteriaBuilder.count(root));
 
+        System.out.println("오늘 마지막 시간 : "+timeBuilder.getTodayEndTime());
+        System.out.println("오늘 시작 시간 : "+timeBuilder.getTodayStartTime());
+        
         List<Predicate> predicates = new ArrayList<Predicate>();        
         predicates.add(criteriaBuilder.equal(root.get("adsKey"), adsKey));
         predicates.add(criteriaBuilder.equal(root.get("mediaKey"), mediaKey));
