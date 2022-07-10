@@ -259,8 +259,10 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         System.out.println(adsDayLimit+":"+todayTotalPostbackCount);
         
         // 일일 광고 한도에 도달함
-        if(todayTotalPostbackCount.compareTo(adsDayLimit) >= 0){              
+        if(todayTotalPostbackCount.compareTo(adsDayLimit) >= 0){        
+            System.out.println("디버그1");    
             if(adsDayLimit != -1){
+                System.out.println("디버그2");
                 adsMediaService.updateIsDayLimit(true, adsKey, mediaKey);
                 // 메모리 데이터 업데이트
                 memoryDataService.updateMemoryData("ads-media", am.getId());
