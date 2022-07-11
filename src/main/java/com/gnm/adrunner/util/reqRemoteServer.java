@@ -8,6 +8,8 @@ public class reqRemoteServer {
     public static ResponseEntity<String> requestGET(String URL){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(URL, String.class);
+
+        System.out.println(response);
         return response;
     }
 
