@@ -257,7 +257,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
 
 
         // 전환 수가 데일리캡 한도에 다다를 경우 광고 상태가 중지로 변경됨
-        Integer adsDayLimit             = am.getMediaDailyCap();
+        Integer adsDayLimit             = am.getRunDailyCap();
 
         Integer todayTotalPostbackCount = postbackService.countTodayTotalPostbackByAdsKeyAndMediaKey(adsKey, mediaKey);
 
