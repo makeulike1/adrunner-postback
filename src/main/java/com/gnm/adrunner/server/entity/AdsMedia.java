@@ -26,6 +26,8 @@ public class AdsMedia {
 
     private Boolean isDayLimit;
 
+    private Boolean todayLimit;
+
     private String  createtime;
 
     public Integer getId() {
@@ -84,6 +86,14 @@ public class AdsMedia {
         this.isDayLimit = isDayLimit;
     }
 
+    public Boolean getTodayLimit() {
+        return todayLimit;
+    }
+
+    public void setTodayLimit(Boolean todayLimit) {
+        this.todayLimit = todayLimit;
+    }
+
     public String getCreatetime() {
         return createtime;
     }
@@ -96,10 +106,7 @@ public class AdsMedia {
     public String toString() {
         return "AdsMedia [adsKey=" + adsKey + ", createtime=" + createtime + ", id=" + id + ", isDayLimit=" + isDayLimit
                 + ", mediaCost=" + mediaCost + ", mediaDailyCap=" + mediaDailyCap + ", mediaKey=" + mediaKey
-                + ", runDailyCap=" + runDailyCap + "]";
+                + ", runDailyCap=" + runDailyCap + ", todayLimit=" + todayLimit + "]";
     }
  
-    
-     
-    
 }

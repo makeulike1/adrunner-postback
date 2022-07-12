@@ -200,7 +200,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
 
         // 광고가 일일 한도에 도달하였을 경우 
-        if(ads.getIsDailyCap() && am.getIsDayLimit())
+        if(ads.getIsDailyCap() && am.getTodayLimit())
             return ResponseEntity.status(216)
                     .headers(responseHeaders)
                     .body(RequestResponseInterface.getStatusMessage(216));
@@ -258,7 +258,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         // 일일 광고 한도에 도달함
         if(todayTotalPostbackCount.compareTo(adsDayLimit) >= 0){        
             if(adsDayLimit != -1){
-                adsMediaService.updateIsDayLimit(true, adsKey, mediaKey);
+                adsMediaService.updateTodayLimit(true, adsKey, mediaKey);
                 // 메모리 데이터 업데이트
                 memoryDataService.updateMemoryData("ads-media", am.getId());
             }
