@@ -13,16 +13,13 @@ import com.gnm.adrunner.config.GlobalConstant;
 import com.gnm.adrunner.server.RequestResponseInterface;
 import com.gnm.adrunner.server.entity.Ads;
 import com.gnm.adrunner.server.entity.AdsMedia;
-import com.gnm.adrunner.server.entity.Media;
 import com.gnm.adrunner.server.entity.Postback;
 import com.gnm.adrunner.server.service.AdsMediaService;
 import com.gnm.adrunner.server.service.AdsService;
 import com.gnm.adrunner.server.service.PostbackService;
 import com.gnm.adrunner.server.service.LogAdsService;
 import com.gnm.adrunner.server.service.MemoryDataService;
-import com.gnm.adrunner.util.postbackURLBuilder;
 import com.gnm.adrunner.util.redisUtil;
-import com.gnm.adrunner.util.reqRemoteServer;
 import com.gnm.adrunner.util.timeBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,7 +171,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
 
             String mediaKey = ck.split(":")[1];
     
-
+            String ptn_ck   = ck.split(":")[2];
 
 
             
@@ -292,57 +289,23 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setCreatetime(timeBuilder.getCurrentTime());
             
             
-            
-    
-
-
-     
+             
             // 포스트백 테이블에 포스트백 로그 삽입
             postbackService.saveRecord(p);
 
+
+
             
-            // 전환 수가 데일리캡 한도에 다다를 경우 광고 상태가 중지로 변경됨
-            Integer adsDayLimit     = am.getRunDailyCap();
+            // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
+            postbackService.postbackHandler(am, adsKey, mediaKey, p, ptn_ck, ads);
 
-            Integer todayTotalPostbackCount = postbackService.countTodayTotalPostbackByAdsKeyAndMediaKey(adsKey, mediaKey);
-
-
-            // 일일 광고 한도에 도달함
-            if(todayTotalPostbackCount.compareTo(adsDayLimit) >= 0){              
-                if(adsDayLimit != -1){
-                    adsMediaService.updateTodayLimit(true, adsKey, mediaKey);
-                    // 메모리 데이터 업데이트
-                    memoryDataService.updateMemoryData("ads-media", am.getId());
-                }
-            }
-
- 
-            // 해당 광고가 포스트백 송수신이 설정되어있다면 매체사로 포스트백
-            if(ads.getIsPostback()){
-                Media m     = mediaRepository.findByKey(mediaKey);
-
-                // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
-                if(m.getIsPostback()){
-                    try{
-                        reqRemoteServer.requestGET(
-                            postbackURLBuilder.build(mediaParamRepository.findByTypeAndMediaKey(1, mediaKey), p, m.getPostbackEvent(), ads.getAff()));
-                    }catch(Exception e){
-
-                    }
-                    
-                }
-
-                m = null;
-            }
-
-
-
+   
 
             p           =   null;
             adsKey      =   null;
             mediaKey    =   null;
             ads         =   null;
-            todayTotalPostbackCount = null;
+            ptn_ck      =   null;
         
                 
         return ResponseEntity.status(200)

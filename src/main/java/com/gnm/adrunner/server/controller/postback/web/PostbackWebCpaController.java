@@ -139,7 +139,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
 
         String mediaKey = ck.split(":")[1];
             
-        
+        String ptn_ck   = ck.split(":")[2];
         
 
 
@@ -250,33 +250,16 @@ public class PostbackWebCpaController extends RequestResponseInterface{
         p.setAdvCost(ads.getCost2());
         p.setMediaCost(mediaCost);
         postbackRepository.save(p);
+ 
 
+        // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
+        postbackService.postbackHandler(am, adsKey, mediaKey, p, ptn_ck, ads);
+ 
+        
         p = null;
-
-
-
-
-        // 전환 수가 데일리캡 한도에 다다를 경우 광고 상태가 중지로 변경됨
-        Integer adsDayLimit             = am.getRunDailyCap();
-
-        Integer todayTotalPostbackCount = postbackService.countTodayTotalPostbackByAdsKeyAndMediaKey(adsKey, mediaKey);
-
-
-
-        // 일일 광고 한도에 도달함
-        if(todayTotalPostbackCount.compareTo(adsDayLimit) >= 0){              
-            if(adsDayLimit != -1){
-                adsMediaService.updateTodayLimit(true, adsKey, mediaKey);
-                // 메모리 데이터 업데이트
-                memoryDataService.updateMemoryData("ads-media", am.getId());
-            }
-        }
-
-
-        adsDayLimit = null;
-        todayTotalPostbackCount = null;
-
-
+        adsKey = null;
+        mediaKey = null;
+        ptn_ck = null;
 
 
         return ResponseEntity.status(200)
