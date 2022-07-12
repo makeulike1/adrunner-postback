@@ -124,6 +124,8 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         String adsKey   = ck.split(":")[0];
 
         String mediaKey = ck.split(":")[1];
+
+        String ptnCK    = ck.split(":")[2];
     
 
 
@@ -273,6 +275,10 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
             // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
             if(m.getIsPostback()){
                 try{
+
+                    // 포스트백을 보낼 때는 매체사에서 받은 클릭키를 송신하도록
+                    p.setClickKey(ptnCK);
+
                     reqRemoteServer.requestGET(
                         postbackURLBuilder.build(
                             mediaParamRepository.findByTypeAndMediaKey(0, mediaKey), p, m.getPostbackInstall(), ads.getAff()));                
@@ -289,6 +295,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p = null;
         adsKey = null;
         mediaKey = null;
+        ptnCK = null;
         adsDayLimit = null;
         todayTotalPostbackCount = null;
 

@@ -7,9 +7,9 @@ public class reqRemoteServer {
 
     public static ResponseEntity<String> requestGET(String URL){
         RestTemplate restTemplate = new RestTemplate();
+        System.out.println("URL : "+URL);
         ResponseEntity<String> response = restTemplate.getForEntity(URL, String.class);
-
-        System.out.println(response);
+        System.out.println("RESPONSE : "+response);
         return response;
     }
 
