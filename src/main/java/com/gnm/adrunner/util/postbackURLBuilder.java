@@ -11,10 +11,6 @@ public class postbackURLBuilder {
 
         String token [] = p.getClickKey().split(":");
 
-        for(String e : token){
-            System.out.println(e);
-        }
-
         for(MediaParam mp : list){
             switch(mp.getParamValue()){
                 case "click_key":   url = url.replace(mp.getParamKey(),   token[4]);        break;
@@ -40,7 +36,7 @@ public class postbackURLBuilder {
         }
 
         token = null;
-        
+
         System.out.println(url);
 
         return url;

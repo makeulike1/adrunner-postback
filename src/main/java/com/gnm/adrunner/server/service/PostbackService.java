@@ -214,6 +214,7 @@ public class PostbackService {
         if(m.getIsPostback()){
             try{
 
+                /*
                 
                 // 광고가 nCPI인 경우 매체사 인스톨 포스트백 전송
                 if(adsType == GlobalConstant.ADS_TYPE_APP_NCPI)
@@ -232,7 +233,8 @@ public class PostbackService {
                             pb, 
                             m.getPostbackEvent(), 
                             aff));  
-                             
+                            
+                */
 
             }catch(Exception e){
 
