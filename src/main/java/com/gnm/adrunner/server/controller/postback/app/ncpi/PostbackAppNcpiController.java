@@ -67,8 +67,6 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
     public @ResponseBody ResponseEntity<String> NCPIpostback(
         @RequestParam(value="click_key",required = false, defaultValue = "") String ck,
         @RequestParam(value="device_id",required = false, defaultValue = "") String deviceId,
-        @RequestParam(value="gaid",required = false, defaultValue = "") String gaid,
-        @RequestParam(value="idfa",required = false, defaultValue = "") String idfa,
         @RequestParam(value="carrier",required = false, defaultValue = "") String carrier,
         @RequestParam(value="brand",required = false, defaultValue = "") String brand,
         @RequestParam(value="model",required = false, defaultValue = "") String model,
@@ -78,13 +76,6 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         @RequestParam(value="country", required = false, defaultValue = "") String country,
         @RequestParam(value="language", required = false, defaultValue = "") String language,
         @RequestParam(value="network", required = false, defaultValue = "") String network,
-        @RequestParam(value="ptn_pub", required = false, defaultValue = "") String ptn_pub,
-        @RequestParam(value="sub_pub", required = false, defaultValue = "") String sub_pub,
-        @RequestParam(value="s_p1", required = false, defaultValue = "") String sP1,
-        @RequestParam(value="s_p2", required = false, defaultValue = "") String sP2,
-        @RequestParam(value="s_p3", required = false, defaultValue = "") String sP3,
-        @RequestParam(value="s_p4", required = false, defaultValue = "") String sP4,
-        @RequestParam(value="s_p5", required = false, defaultValue = "") String sP5,
         HttpServletRequest request){
 
     
@@ -211,8 +202,8 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p.setAdsKey(token[0]);
         p.setMediaKey(token[1]);
         p.setDeviceId(deviceId);
-        p.setGaid(gaid);
-        p.setIdfa(idfa);
+        p.setGaid(token[7]);
+        p.setIdfa(token[8]);
         p.setCarrier(carrier);
         p.setBrand(brand);
         p.setModel(model);
@@ -222,19 +213,19 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p.setCountry(country);
         p.setLanguage(language);
         p.setNetwork(network);
-        p.setPtnPub(ptn_pub);
-        p.setSubPub(sub_pub);
+        p.setPtnPub(token[5]);
+        p.setSubPub(token[6]);
         p.setCreatetime(timeBuilder.getCurrentTime());
         p.setEventName("");
         p.setEventValue("");
         p.setEventTime("1111-11-11 11:11:11");
         p.setAdvCost(ads.getCost2());
         p.setMediaCost(mediaCost);
-        p.setS_p1(sP1);
-        p.setS_p2(sP2);
-        p.setS_p3(sP3);
-        p.setS_p4(sP4);
-        p.setS_p5(sP5);
+        p.setS_p1(token[9]);
+        p.setS_p2(token[10]);
+        p.setS_p3(token[11]);
+        p.setS_p4(token[12]);
+        p.setS_p5(token[13]);
          
 
         // 포스트백 테이블에 포스트백 로그 삽입

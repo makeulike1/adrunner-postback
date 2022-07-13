@@ -78,13 +78,9 @@ public class PostbackAppCpaController extends RequestResponseInterface{
     @GetMapping("/postback/app/cpa") 
     public @ResponseBody ResponseEntity<String> appCPAPostback(
         @RequestParam(value="click_key",required = false, defaultValue = "") String ck,
-        @RequestParam(value="ptn_pub",required = false, defaultValue = "") String ptn_pub,
-        @RequestParam(value="sub_pub",required = false, defaultValue = "") String sub_pub,
         @RequestParam(value="os",required = false, defaultValue = "") String os,
         @RequestParam(value="android_id",required = false, defaultValue = "") String androidId,
         @RequestParam(value="device_id",required = false, defaultValue = "") String deviceId,
-        @RequestParam(value="gaid",required = false, defaultValue = "") String gaid,
-        @RequestParam(value="idfa",required = false, defaultValue = "") String idfa,
         @RequestParam(value="carrier",required = false, defaultValue = "") String carrier,
         @RequestParam(value="brand",required = false, defaultValue = "") String brand,
         @RequestParam(value="model",required = false, defaultValue = "") String model,
@@ -96,11 +92,6 @@ public class PostbackAppCpaController extends RequestResponseInterface{
         @RequestParam(value="event_name",required = false, defaultValue = "") String eventName,
         @RequestParam(value="event_value",required = false, defaultValue = "") String eventValue,
         @RequestParam(value="event_time",required = false, defaultValue = "") String eventTime,
-        @RequestParam(value="s_p1", required = false, defaultValue = "") String sP1,
-        @RequestParam(value="s_p2", required = false, defaultValue = "") String sP2,
-        @RequestParam(value="s_p3", required = false, defaultValue = "") String sP3,
-        @RequestParam(value="s_p4", required = false, defaultValue = "") String sP4,
-        @RequestParam(value="s_p5", required = false, defaultValue = "") String sP5,
         HttpServletRequest request) throws UnsupportedEncodingException{
 
 
@@ -257,6 +248,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
                         
 
 
+                        
 
 
             // 매체사 비용 
@@ -266,8 +258,8 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             Postback p = new Postback();
             p.setClickKey(ck);
             p.setDeviceId(deviceId);
-            p.setGaid(gaid);
-            p.setIdfa(idfa);
+            p.setGaid(token[7]);
+            p.setIdfa(token[8]);
             p.setAdsKey(token[0]);
             p.setMediaKey(token[1]);
             p.setCarrier(carrier);
@@ -279,18 +271,18 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setCountry(country);
             p.setLanguage(language);
             p.setNetwork(network);
-            p.setPtnPub(ptn_pub);
-            p.setSubPub(sub_pub);
+            p.setPtnPub(token[5]);
+            p.setSubPub(token[6]);
             p.setEventName(eventName);
             p.setEventValue(eventValue);
             p.setEventTime(eventTime);
             p.setAdvCost(ads.getCost2());
             p.setMediaCost(mediaCost);
-            p.setS_p1(sP1);
-            p.setS_p2(sP2);
-            p.setS_p3(sP3);
-            p.setS_p4(sP4);
-            p.setS_p5(sP5);
+            p.setS_p1(token[9]);
+            p.setS_p2(token[10]);
+            p.setS_p3(token[11]);
+            p.setS_p4(token[12]);
+            p.setS_p5(token[13]);
             p.setCreatetime(timeBuilder.getCurrentTime());
             
             
