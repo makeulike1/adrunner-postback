@@ -119,10 +119,10 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
 
         if(token.length != 3){
-            // 파라미터에 클릭키가 존재하지 않는 경우 206 에러
-            return ResponseEntity.status(206)
+            // 유효하지 않는 클릭키 214 에러
+            return ResponseEntity.status(214)
                 .headers(responseHeaders)
-                .body(getStatusMessage(206));
+                .body(getStatusMessage(214));
         }
            
 
@@ -244,7 +244,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
         postbackService.postbackHandler(am, token[0], token[1], p, token[2], ads);
 
-        
+
         p = null;
         token = null;
         

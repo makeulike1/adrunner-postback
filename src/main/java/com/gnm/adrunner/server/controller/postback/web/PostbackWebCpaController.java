@@ -139,10 +139,10 @@ public class PostbackWebCpaController extends RequestResponseInterface{
 
 
         if(token.length != 3){
-            // 파라미터에 클릭키가 존재하지 않는 경우 206 에러
-            return ResponseEntity.status(206)
+            // 유효하지 않는 클릭키 214 에러
+            return ResponseEntity.status(214)
                 .headers(responseHeaders)
-                .body(getStatusMessage(206));
+                .body(getStatusMessage(214));
         }
 
         
