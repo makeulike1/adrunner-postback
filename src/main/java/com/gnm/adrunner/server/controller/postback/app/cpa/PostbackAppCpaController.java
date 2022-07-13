@@ -166,18 +166,23 @@ public class PostbackAppCpaController extends RequestResponseInterface{
                     .body(getStatusMessage(225));
 
 
+                    
+            String[] token  = ck.split(":");
 
-            String adsKey   = ck.split(":")[0];
 
-            String mediaKey = ck.split(":")[1];
-    
-            String ptn_ck   = ck.split(":")[2];
+            if(token.length != 3){
+                // 파라미터에 클릭키가 존재하지 않는 경우 206 에러
+                return ResponseEntity.status(206)
+                    .headers(responseHeaders)
+                    .body(getStatusMessage(206));
+            }
+ 
 
 
             
 
             // 광고키에 해당하는 광고를 메모리 데이터로부터 READ
-            Ads ads = adsRepository.findByAdsKey(adsKey);
+            Ads ads = adsRepository.findByAdsKey(token[0]);
 
 
 
@@ -196,7 +201,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
 
 
             // 클릭키가 존재하지 않는 경우 214 에러
-            if(!redisUtil.findck(adsKey, ck, ads.getRedisIndex())){
+            if(!redisUtil.findck(token[0], ck, ads.getRedisIndex())){
                 return ResponseEntity.status(214)
                         .headers(responseHeaders)
                         .body(getStatusMessage(214));
@@ -206,7 +211,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
 
 
             // 광고키와 매체사 키에 해당하는 광고 매체사 연동 정보 조회
-            AdsMedia am = adsMediaRepository.findByAdsKeyAndMediakey(adsKey, mediaKey);
+            AdsMedia am = adsMediaRepository.findByAdsKeyAndMediakey(token[0], token[1]);
 
 
  
@@ -263,8 +268,8 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setDeviceId(deviceId);
             p.setGaid(gaid);
             p.setIdfa(idfa);
-            p.setAdsKey(adsKey);
-            p.setMediaKey(mediaKey);
+            p.setAdsKey(token[0]);
+            p.setMediaKey(token[1]);
             p.setCarrier(carrier);
             p.setBrand(brand);
             p.setModel(model);
@@ -297,15 +302,13 @@ public class PostbackAppCpaController extends RequestResponseInterface{
 
             
             // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
-            postbackService.postbackHandler(am, adsKey, mediaKey, p, ptn_ck, ads);
+            postbackService.postbackHandler(am, token[0], token[1], p, token[2], ads);
 
    
 
             p           =   null;
-            adsKey      =   null;
-            mediaKey    =   null;
+            token       =   null;
             ads         =   null;
-            ptn_ck      =   null;
         
                 
         return ResponseEntity.status(200)
