@@ -170,7 +170,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             String[] token  = ck.split(":");
 
 
-            if(token.length != 3){
+            if(token.length != 14){
                 // 유효하지 않는 클릭키 214 에러
                 return ResponseEntity.status(214)
                     .headers(responseHeaders)
