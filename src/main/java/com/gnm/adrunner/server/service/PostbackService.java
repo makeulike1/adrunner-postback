@@ -11,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import com.gnm.adrunner.config.GlobalConstant;
 import com.gnm.adrunner.server.entity.Ads;
 import com.gnm.adrunner.server.entity.AdsMedia;
 import com.gnm.adrunner.server.entity.Media;
@@ -174,7 +175,7 @@ public class PostbackService {
 
 
     
-    public void postbackHandler(AdsMedia am, String adsKey, String mediaKey, Postback p, String ptn_ck, Ads ads){
+    public void postbackHandler(AdsMedia am,    String adsKey,      String mediaKey,        Postback p,    Ads ads){
         
         
         // 전환 수가 데일리캡 한도에 다다를 경우 광고 상태가 중지로 변경됨
@@ -191,32 +192,54 @@ public class PostbackService {
             }
         } 
 
- 
-
         // 해당 광고가 포스트백 송수신이 설정되어있다면 매체사로 포스트백
-        if(ads.getIsPostback()){
-            Media m     = mediaRepository.findByKey(mediaKey);
-
-
-            // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
-            if(m.getIsPostback()){
-                try{
-
-                    // 포스트백을 보낼 때는 매체사에서 받은 클릭키를 송신하도록
-                    p.setClickKey(ptn_ck);
-
-                    reqRemoteServer.requestGET(
-                        postbackURLBuilder.build(
-                            mediaParamRepository.findByTypeAndMediaKey(0, mediaKey), p, m.getPostbackInstall(), ads.getAff()));                
-                }catch(Exception e){
-
-                } 
-            }
-
-            m = null;
-        }
+        if(ads.getIsPostback())
+            sendPostbackToMedia(mediaKey, p, ads.getAff(), ads.getType());
 
         adsDayLimit = null;
         todayTotalPostbackCount = null;
+    }
+
+
+    
+
+
+    // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
+    public void sendPostbackToMedia(String mediaKey, Postback pb,   Integer aff,    Integer adsType){
+
+        Media m     = mediaRepository.findByKey(mediaKey);
+
+
+
+        if(m.getIsPostback()){
+            try{
+
+                
+                // 광고가 nCPI인 경우 매체사 인스톨 포스트백 전송
+                if(adsType == GlobalConstant.ADS_TYPE_APP_NCPI)
+                    reqRemoteServer.requestGET(
+                        postbackURLBuilder.build(
+                            mediaParamRepository.findByTypeAndMediaKey(0, mediaKey), 
+                            pb, 
+                            m.getPostbackInstall(), 
+                            aff));           
+
+                // 광고가 nCPI인 경우 매체사 이벤트 포스트백 전송
+                if(adsType == GlobalConstant.ADS_TYPE_APP_CPA)
+                    reqRemoteServer.requestGET(
+                        postbackURLBuilder.build(
+                            mediaParamRepository.findByTypeAndMediaKey(1, mediaKey), 
+                            pb, 
+                            m.getPostbackEvent(), 
+                            aff));  
+                             
+
+            }catch(Exception e){
+
+            } 
+        }
+
+        m = null;
+
     }
 }

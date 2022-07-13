@@ -221,11 +221,6 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p.setEventTime("1111-11-11 11:11:11");
         p.setAdvCost(ads.getCost2());
         p.setMediaCost(mediaCost);
-        p.setS_p1(token[9]);
-        p.setS_p2(token[10]);
-        p.setS_p3(token[11]);
-        p.setS_p4(token[12]);
-        p.setS_p5(token[13]);
          
 
         // 포스트백 테이블에 포스트백 로그 삽입
@@ -233,7 +228,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
 
         // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
-        postbackService.postbackHandler(am, token[0], token[1], p, token[2], ads);
+        postbackService.postbackHandler(am, token[0], token[1], p, ads);
 
 
         p = null;

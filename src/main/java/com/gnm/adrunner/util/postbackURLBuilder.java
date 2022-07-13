@@ -8,12 +8,19 @@ public class postbackURLBuilder {
 
     public static String build(Iterable<MediaParam> list, Postback p, String url, Integer affId){
 
+
+        String token [] = p.getClickKey().split(":");
+
+        for(String e : token){
+            System.out.println(e);
+        }
+
         for(MediaParam mp : list){
             switch(mp.getParamValue()){
-                case "click_key":   url = url.replace(mp.getParamKey(),   p.getClickKey());   break;
-                case "ptn_pub":     url = url.replace(mp.getParamKey(),   p.getPtnPub());     break;
-                case "sub_pub":     url = url.replace(mp.getParamKey(),   p.getSubPub());     break;
-                case "gaid":        url = url.replace(mp.getParamKey(),   p.getGaid());       break;
+                case "click_key":   url = url.replace(mp.getParamKey(),   token[4]);        break;
+                case "ptn_pub":     url = url.replace(mp.getParamKey(),   token[5]);     break;
+                case "sub_pub":     url = url.replace(mp.getParamKey(),   token[6]);     break;
+                case "gaid":        url = url.replace(mp.getParamKey(),   token[7]);       break;
                 case "idfa":        url = url.replace(mp.getParamKey(),   p.getIdfa());       break;
                 case "ip":          url = url.replace(mp.getParamKey(),   p.getIp());         break;
                 case "brand":       url = url.replace(mp.getParamKey(),   p.getBrand());      break;
@@ -22,16 +29,20 @@ public class postbackURLBuilder {
                 case "os_ver":      url = url.replace(mp.getParamKey(),   p.getOsVer());      break;
                 case "country":     url = url.replace(mp.getParamKey(),   p.getCountry());    break;
                 case "carrier":     url = url.replace(mp.getParamKey(),   p.getCarrier());    break;
-                case "s_p1":        url = url.replace(mp.getParamKey(),   p.getS_p1());        break;
-                case "s_p2":        url = url.replace(mp.getParamKey(),   p.getS_p2());        break;
-                case "s_p3":        url = url.replace(mp.getParamKey(),   p.getS_p3());        break;
-                case "s_p4":        url = url.replace(mp.getParamKey(),   p.getS_p4());        break;
-                case "s_p5":        url = url.replace(mp.getParamKey(),   p.getS_p5());        break;
+                case "s_p1":        url = url.replace(mp.getParamKey(),   token[9]);        break;
+                case "s_p2":        url = url.replace(mp.getParamKey(),   token[10]);        break;
+                case "s_p3":        url = url.replace(mp.getParamKey(),   token[11]);        break;
+                case "s_p4":        url = url.replace(mp.getParamKey(),   token[12]);        break;
+                case "s_p5":        url = url.replace(mp.getParamKey(),   token[13]);        break;
                 case "aff":         url = url.replace(mp.getParamKey(),   affId.toString());  break;
                 case "event_value": url = url.replace(mp.getParamKey(),   p.getEventValue());   break;
             }
         }
+
+        token = null;
         
+        System.out.println(url);
+
         return url;
     }
 }

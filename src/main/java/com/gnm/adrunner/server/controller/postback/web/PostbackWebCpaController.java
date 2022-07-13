@@ -255,7 +255,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
  
 
         // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
-        postbackService.postbackHandler(am, token[0], token[1], p, token[2], ads);
+        postbackService.postbackHandler(am, token[0], token[1], p, ads);
  
         
         p = null;

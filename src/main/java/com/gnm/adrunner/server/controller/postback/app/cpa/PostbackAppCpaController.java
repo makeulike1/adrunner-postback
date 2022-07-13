@@ -278,11 +278,6 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setEventTime(eventTime);
             p.setAdvCost(ads.getCost2());
             p.setMediaCost(mediaCost);
-            p.setS_p1(token[9]);
-            p.setS_p2(token[10]);
-            p.setS_p3(token[11]);
-            p.setS_p4(token[12]);
-            p.setS_p5(token[13]);
             p.setCreatetime(timeBuilder.getCurrentTime());
             
             
@@ -294,7 +289,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
 
             
             // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
-            postbackService.postbackHandler(am, token[0], token[1], p, token[2], ads);
+            postbackService.postbackHandler(am, token[0], token[1], p, ads);
 
    
 
