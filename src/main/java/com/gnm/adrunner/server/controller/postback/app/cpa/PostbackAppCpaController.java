@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -92,7 +93,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
         @RequestParam(value="event_name",required = false, defaultValue = "") String eventName,
         @RequestParam(value="event_value",required = false, defaultValue = "") String eventValue,
         @RequestParam(value="event_time",required = false, defaultValue = "") String eventTime,
-        HttpServletRequest request) throws UnsupportedEncodingException{
+        HttpServletRequest request) throws UnsupportedEncodingException, ParseException{
 
 
 
@@ -268,7 +269,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             // 클릭키에서 데이터 구분
             p.setAdsKey(token[0]);
             p.setMediaKey(token[1]);
-            p.setClickTime(token[2]);
+            p.setClickTime(timeBuilder.tranferToDateTime(token[2]));
             p.setUuid(token[3]);
             p.setPtnClk(token[4]);
             p.setPtnPub(token[5]);

@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import java.text.ParseException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.gnm.adrunner.util.redisUtil;
@@ -76,7 +78,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         @RequestParam(value="country", required = false, defaultValue = "") String country,
         @RequestParam(value="language", required = false, defaultValue = "") String language,
         @RequestParam(value="network", required = false, defaultValue = "") String network,
-        HttpServletRequest request){
+        HttpServletRequest request) throws ParseException{
 
     
 
@@ -204,7 +206,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         // 클릭키에서 데이터 구분
         p.setAdsKey(token[0]);
         p.setMediaKey(token[1]);
-        p.setClickTime(token[2]);
+        p.setClickTime(timeBuilder.tranferToDateTime(token[2]));
         p.setUuid(token[3]);
         p.setPtnClk(token[4]);
         p.setPtnPub(token[5]);

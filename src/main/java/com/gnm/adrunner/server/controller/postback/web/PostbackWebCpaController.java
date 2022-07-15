@@ -3,6 +3,8 @@ package com.gnm.adrunner.server.controller.postback.web;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.stereotype.Controller;
 
+import java.text.ParseException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.gnm.adrunner.config.GlobalConstant;
@@ -66,7 +68,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
     public ResponseEntity<String> webCpaPostback(
         @RequestParam(value="click_key",required = false) String ck,
         @RequestParam(value="user_agent", required = false) String userAgent,
-        HttpServletRequest request){
+        HttpServletRequest request) throws ParseException{
 
 
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -237,7 +239,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
         // 클릭키에서 데이터 구분
         p.setAdsKey(token[0]);
         p.setMediaKey(token[1]);
-        p.setClickTime(token[2]);
+        p.setClickTime(timeBuilder.tranferToDateTime(token[2]));
         p.setUuid(token[3]);
         p.setPtnClk(token[4]);
         p.setPtnPub(token[5]);

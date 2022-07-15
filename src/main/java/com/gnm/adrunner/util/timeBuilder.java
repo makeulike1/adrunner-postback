@@ -20,8 +20,21 @@ public class timeBuilder {
         public static SimpleDateFormat  simpleDateFormat2   = new SimpleDateFormat("yyyy-MM-dd 23:59:59", Locale.KOREA);
     
         public static SimpleDateFormat  simpleDateFormat3   = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+
+        public static SimpleDateFormat  simpleDateFormat4   = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
         
             
+
+        // 시간 형태 변환 : yyyyMMddHHmmss -> yyyy-MM-dd HH:mm:ss
+        public static String tranferToDateTime(String time) throws ParseException{
+            simpleDateFormat.setTimeZone(timeZone);
+            simpleDateFormat4.setTimeZone(timeZone);
+            Date date = simpleDateFormat4.parse(time);
+            Calendar c = Calendar.getInstance(timeZone);
+            c.setTime(date);
+            return simpleDateFormat.format(date.getTime());
+        }
+        
         // 현재 시각 반환
         public static String getCurrentTime(){
             simpleDateFormat.setTimeZone(timeZone);
