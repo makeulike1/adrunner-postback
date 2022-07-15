@@ -275,11 +275,11 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setSubPub(token[6]);
             p.setGaid(token[7]);
             p.setIdfa(token[8]);
-            p.setsP1(token[9]);
-            p.setsP2(token[10]);
-            p.setsP3(token[11]);
-            p.setsP4(token[12]);
-            p.setsP5(token[13]);
+            p.setS_p1(token[9]);
+            p.setS_p2(token[10]);
+            p.setS_p3(token[11]);
+            p.setS_p4(token[12]);
+            p.setS_p5(token[13]);
             
 
             // 이미 사전에 포스트백을 받은 적이 있는 경우 207 에러
