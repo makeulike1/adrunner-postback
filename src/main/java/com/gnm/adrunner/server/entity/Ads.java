@@ -42,8 +42,6 @@ public class Ads {
 
     private Boolean isDelete;
 
-    private Boolean isDailyCap;
-
     private Integer status;
 
     private String  deletetime;
@@ -183,15 +181,7 @@ public class Ads {
     public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
-
-    public Boolean getIsDailyCap() {
-        return isDailyCap;
-    }
-
-    public void setIsDailyCap(Boolean isDailyCap) {
-        this.isDailyCap = isDailyCap;
-    }
-
+ 
     public Integer getStatus() {
         return status;
     }
@@ -277,10 +267,10 @@ public class Ads {
         return "Ads [adsKey=" + adsKey + ", advKey=" + advKey + ", aff=" + aff + ", autodown=" + autodown
                 + ", autostart=" + autostart + ", cost1=" + cost1 + ", cost2=" + cost2 + ", createtime=" + createtime
                 + ", deletetime=" + deletetime + ", description=" + description + ", enddate=" + enddate
-                + ", eventName=" + eventName + ", id=" + id + ", isDailyCap=" + isDailyCap + ", isDelete=" + isDelete
-                + ", isPostback=" + isPostback + ", loopbackdate=" + loopbackdate + ", name=" + name + ", os=" + os
-                + ", redisIndex=" + redisIndex + ", startdate=" + startdate + ", status=" + status + ", supplyDemand="
-                + supplyDemand + ", trackingUrl=" + trackingUrl + ", type=" + type + ", updatetime=" + updatetime + "]";
+                + ", eventName=" + eventName + ", id=" + id + ", isDelete=" + isDelete + ", isPostback=" + isPostback
+                + ", loopbackdate=" + loopbackdate + ", name=" + name + ", os=" + os + ", redisIndex=" + redisIndex
+                + ", startdate=" + startdate + ", status=" + status + ", supplyDemand=" + supplyDemand
+                + ", trackingUrl=" + trackingUrl + ", type=" + type + ", updatetime=" + updatetime + "]";
     }
- 
+     
 }

@@ -175,7 +175,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
 
         // 광고가 일일 한도에 도달하였을 경우 
-        if(ads.getIsDailyCap() && am.getTodayLimit())
+        if(am.getIsDayLimit() && am.getTodayLimit())
             return ResponseEntity.status(216)
                     .headers(responseHeaders)
                     .body(RequestResponseInterface.getStatusMessage(216));
