@@ -239,7 +239,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
         p.setMediaKey(token[1]);
         p.setClickTime(token[2]);
         p.setUuid(token[3]);
-        p.setMediaKey(token[4]);
+        p.setPtnClk(token[4]);
         p.setPtnPub(token[5]);
         p.setSubPub(token[6]);
         p.setGaid(token[7]);
@@ -251,6 +251,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
         p.setS_p5(token[13]);
 
 
+
         // 이미 사전에 포스트백을 받은 적이 있는 경우 207 에러
         if(postbackService.isExistClickKey(token[0], token[1], token[3], token[2]))
             return ResponseEntity.status(207)
@@ -260,6 +261,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
 
         postbackRepository.save(p);
  
+        
 
         // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
         postbackService.postbackHandler(am, token[0], token[1], p, ads, ck);

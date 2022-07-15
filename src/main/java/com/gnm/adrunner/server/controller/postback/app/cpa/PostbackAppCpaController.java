@@ -270,7 +270,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             p.setMediaKey(token[1]);
             p.setClickTime(token[2]);
             p.setUuid(token[3]);
-            p.setMediaKey(token[4]);
+            p.setPtnClk(token[4]);
             p.setPtnPub(token[5]);
             p.setSubPub(token[6]);
             p.setGaid(token[7]);

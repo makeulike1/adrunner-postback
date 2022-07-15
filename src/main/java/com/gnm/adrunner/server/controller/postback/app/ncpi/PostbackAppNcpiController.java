@@ -120,6 +120,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
 
 
+
         // 클릭키가 존재하지 않는 경우 214 에러
         if(!redisUtil.findck(token[0], ck, ads.getRedisIndex())){
             return ResponseEntity.status(214)
@@ -200,13 +201,12 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p.setMediaCost(mediaCost);
 
 
-
         // 클릭키에서 데이터 구분
         p.setAdsKey(token[0]);
         p.setMediaKey(token[1]);
         p.setClickTime(token[2]);
         p.setUuid(token[3]);
-        p.setMediaKey(token[4]);
+        p.setPtnClk(token[4]);
         p.setPtnPub(token[5]);
         p.setSubPub(token[6]);
         p.setGaid(token[7]);
@@ -227,6 +227,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
 
 
 
+                
 
         // 포스트백 테이블에 포스트백 로그 삽입
         postbackService.saveRecord(p);
