@@ -284,7 +284,7 @@ public class PostbackAppCpaController extends RequestResponseInterface{
             
 
             // 이미 사전에 포스트백을 받은 적이 있는 경우 207 에러
-            if(postbackService.isExistClickKey(token[0], token[1], token[3], token[2]))
+            if(postbackService.isExistClickKey(token[0], token[1], token[3], timeBuilder.tranferToDateTime(token[2])))
                 return ResponseEntity.status(207)
                     .headers(responseHeaders)
                     .body(getStatusMessage(207));
