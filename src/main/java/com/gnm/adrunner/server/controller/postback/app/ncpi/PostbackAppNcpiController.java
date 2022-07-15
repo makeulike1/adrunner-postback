@@ -88,23 +88,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
             return ResponseEntity.status(206)
                 .headers(responseHeaders)
                 .body(getStatusMessage(206));
-
-
-
-
-
-
-
-
-
-
-        // 이미 사전에 포스트백을 받은 적이 있는 경우 207 에러
-        if(postbackService.isExistClickKey(ck))
-            return ResponseEntity.status(207)
-                .headers(responseHeaders)
-                .body(getStatusMessage(207));
-
-
+ 
 
         String[] token  = ck.split(":");
 
@@ -198,12 +182,7 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         Integer mediaCost = adsMediaRepository.getMediaCostByAdsKeyAndMediaKey(token[0], token[1]);
 
         Postback p = new Postback();
-        p.setClickKey(ck);
-        p.setAdsKey(token[0]);
-        p.setMediaKey(token[1]);
         p.setDeviceId(deviceId);
-        p.setGaid(token[7]);
-        p.setIdfa(token[8]);
         p.setCarrier(carrier);
         p.setBrand(brand);
         p.setModel(model);
@@ -213,23 +192,53 @@ public class PostbackAppNcpiController extends RequestResponseInterface{
         p.setCountry(country);
         p.setLanguage(language);
         p.setNetwork(network);
-        p.setPtnPub(token[5]);
-        p.setSubPub(token[6]);
         p.setCreatetime(timeBuilder.getCurrentTime());
         p.setEventName("");
         p.setEventValue("");
         p.setEventTime("1111-11-11 11:11:11");
         p.setAdvCost(ads.getCost2());
         p.setMediaCost(mediaCost);
-         
+
+
+
+        // 클릭키에서 데이터 구분
+        p.setAdsKey(token[0]);
+        p.setMediaKey(token[1]);
+        p.setClickTime(token[2]);
+        p.setUuid(token[3]);
+        p.setMediaKey(token[4]);
+        p.setPtnPub(token[5]);
+        p.setSubPub(token[6]);
+        p.setGaid(token[7]);
+        p.setIdfa(token[8]);
+        p.setsP1(token[9]);
+        p.setsP2(token[10]);
+        p.setsP3(token[11]);
+        p.setsP4(token[12]);
+        p.setsP5(token[13]);
+
+
+
+        // 이미 사전에 포스트백을 받은 적이 있는 경우 207 에러
+        if(postbackService.isExistClickKey(token[0], token[1], token[3], token[2]))
+            return ResponseEntity.status(207)
+                .headers(responseHeaders)
+                .body(getStatusMessage(207));
+
+
+
 
         // 포스트백 테이블에 포스트백 로그 삽입
         postbackService.saveRecord(p);
 
 
-        // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
-        postbackService.postbackHandler(am, token[0], token[1], p, ads);
 
+
+        // 광고 한도 체크 및 매체사 송신이 필요할 경우 매체사로 송신
+        postbackService.postbackHandler(am, token[0], token[1], p, ads, ck);
+
+
+        
 
         p = null;
         token = null;

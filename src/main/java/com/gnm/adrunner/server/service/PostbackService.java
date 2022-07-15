@@ -54,8 +54,8 @@ public class PostbackService {
     }
 
 
-    public Boolean isExistClickKey(String click_key){
-        Integer id = postbackRepository.findIdByClickKey(click_key);
+    public Boolean isExistClickKey(String adsKey, String mediaKey, String uuid, String clicktime){
+        Integer id = postbackRepository.findByAMUC(adsKey, mediaKey, uuid, clicktime);
 
         if(id == null)
             return false;
@@ -90,7 +90,7 @@ public class PostbackService {
         CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
         Root<Postback> root = query.from(Postback.class);
         query.select(criteriaBuilder.count(root));
-        query.where(criteriaBuilder.like(root.get("clickKey"), "%"+adsKey+":%"));
+        query.where(criteriaBuilder.equal(root.get("adsKey"), adsKey));
         return (int) (long) entityManager.createQuery(query).getSingleResult();
         
     }
@@ -175,7 +175,7 @@ public class PostbackService {
 
 
     
-    public void postbackHandler(AdsMedia am,    String adsKey,      String mediaKey,        Postback p,    Ads ads){
+    public void postbackHandler(AdsMedia am,    String adsKey,      String mediaKey,        Postback p,    Ads ads, String ck){
         
         
         // 전환 수가 데일리캡 한도에 다다를 경우 광고 상태가 중지로 변경됨
@@ -194,7 +194,7 @@ public class PostbackService {
 
         // 해당 광고가 포스트백 송수신이 설정되어있다면 매체사로 포스트백
         if(ads.getIsPostback())
-            sendPostbackToMedia(mediaKey, p, ads.getAff(), ads.getType());
+            sendPostbackToMedia(mediaKey, p, ads.getAff(), ads.getType(), ck);
 
         adsDayLimit = null;
         todayTotalPostbackCount = null;
@@ -205,7 +205,7 @@ public class PostbackService {
 
 
     // 포스트백 연동이 된 매체사에 한해서만 포스트백을 전송
-    public void sendPostbackToMedia(String mediaKey, Postback pb,   Integer aff,    Integer adsType){
+    public void sendPostbackToMedia(String mediaKey, Postback pb,   Integer aff,    Integer adsType, String ck){
 
         Media m     = mediaRepository.findByKey(mediaKey);
 
@@ -221,7 +221,8 @@ public class PostbackService {
                             mediaParamRepository.findByTypeAndMediaKey(0, mediaKey), 
                             pb, 
                             m.getPostbackInstall(), 
-                            aff));           
+                            aff,
+                            ck));           
 
                 // 광고가 nCPI인 경우 매체사 이벤트 포스트백 전송
                 if(adsType == GlobalConstant.ADS_TYPE_APP_CPA)
@@ -230,7 +231,8 @@ public class PostbackService {
                             mediaParamRepository.findByTypeAndMediaKey(1, mediaKey), 
                             pb, 
                             m.getPostbackEvent(), 
-                            aff));  
+                            aff,
+                            ck));  
                             
 
             }catch(Exception e){

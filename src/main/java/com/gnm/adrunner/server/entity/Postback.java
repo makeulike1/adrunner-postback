@@ -14,11 +14,13 @@ public class Postback {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
-    private String  clickKey;
-
     private String  adsKey;
     
     private String  mediaKey;
+
+    private String  ptnClk;
+
+    private String  uuid;
 
     private String  deviceId;
 
@@ -58,6 +60,18 @@ public class Postback {
 
     private Integer mediaCost;
 
+    private String  sP1;
+
+    private String  sP2;
+
+    private String  sP3;
+
+    private String  sP4;
+
+    private String  sP5;
+
+    private String  clickTime;
+
     private String  createtime;
 
     public Integer getId() {
@@ -66,14 +80,6 @@ public class Postback {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getClickKey() {
-        return clickKey;
-    }
-
-    public void setClickKey(String clickKey) {
-        this.clickKey = clickKey;
     }
 
     public String getAdsKey() {
@@ -90,6 +96,22 @@ public class Postback {
 
     public void setMediaKey(String mediaKey) {
         this.mediaKey = mediaKey;
+    }
+
+    public String getPtnClk() {
+        return ptnClk;
+    }
+
+    public void setPtnClk(String ptnClk) {
+        this.ptnClk = ptnClk;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getDeviceId() {
@@ -244,6 +266,54 @@ public class Postback {
         this.mediaCost = mediaCost;
     }
 
+    public String getsP1() {
+        return sP1;
+    }
+
+    public void setsP1(String sP1) {
+        this.sP1 = sP1;
+    }
+
+    public String getsP2() {
+        return sP2;
+    }
+
+    public void setsP2(String sP2) {
+        this.sP2 = sP2;
+    }
+
+    public String getsP3() {
+        return sP3;
+    }
+
+    public void setsP3(String sP3) {
+        this.sP3 = sP3;
+    }
+
+    public String getsP4() {
+        return sP4;
+    }
+
+    public void setsP4(String sP4) {
+        this.sP4 = sP4;
+    }
+
+    public String getsP5() {
+        return sP5;
+    }
+
+    public void setsP5(String sP5) {
+        this.sP5 = sP5;
+    }
+
+    public String getClickTime() {
+        return clickTime;
+    }
+
+    public void setClickTime(String clickTime) {
+        this.clickTime = clickTime;
+    }
+
     public String getCreatetime() {
         return createtime;
     }
@@ -255,12 +325,16 @@ public class Postback {
     @Override
     public String toString() {
         return "Postback [adsKey=" + adsKey + ", advCost=" + advCost + ", brand=" + brand + ", carrier=" + carrier
-                + ", clickKey=" + clickKey + ", country=" + country + ", createtime=" + createtime + ", deviceId="
+                + ", clickTime=" + clickTime + ", country=" + country + ", createtime=" + createtime + ", deviceId="
                 + deviceId + ", eventName=" + eventName + ", eventTime=" + eventTime + ", eventValue=" + eventValue
                 + ", gaid=" + gaid + ", id=" + id + ", idfa=" + idfa + ", ip=" + ip + ", language=" + language
                 + ", mediaCost=" + mediaCost + ", mediaKey=" + mediaKey + ", model=" + model + ", network=" + network
-                + ", os=" + os + ", osVer=" + osVer + ", ptnPub=" + ptnPub + ", subPub=" + subPub + "]";
+                + ", os=" + os + ", osVer=" + osVer + ", ptnClk=" + ptnClk + ", ptnPub=" + ptnPub + ", sP1=" + sP1
+                + ", sP2=" + sP2 + ", sP3=" + sP3 + ", sP4=" + sP4 + ", sP5=" + sP5 + ", subPub=" + subPub + ", uuid="
+                + uuid + "]";
     }
+
+    
  
     
 }

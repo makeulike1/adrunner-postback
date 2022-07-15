@@ -6,10 +6,10 @@ import com.gnm.adrunner.server.entity.Postback;
 public class postbackURLBuilder {
 
 
-    public static String build(Iterable<MediaParam> list, Postback p, String url, Integer affId){
+    public static String build(Iterable<MediaParam> list, Postback p, String url, Integer affId, String ck){
 
 
-        String token [] = p.getClickKey().split(":");
+        String token [] = ck.split(":");
 
         for(MediaParam mp : list){
             switch(mp.getParamValue()){
