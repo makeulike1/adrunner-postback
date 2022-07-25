@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service("AdsService")
 public class AdsService {
-  
-
-    @Autowired
-    LogAdsService logAdsService;
+ 
 
     @PersistenceContext
 	private EntityManager entityManager;

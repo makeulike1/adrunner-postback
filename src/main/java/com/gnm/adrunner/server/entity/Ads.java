@@ -58,7 +58,9 @@ public class Ads {
 
     private Integer cost2;
 
-    private Integer redisIndex;
+    private Integer redisGroup;
+    
+    private Integer redisDb;
 
     private Boolean isPostback;
 
@@ -181,7 +183,7 @@ public class Ads {
     public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
     }
- 
+
     public Integer getStatus() {
         return status;
     }
@@ -246,12 +248,20 @@ public class Ads {
         this.cost2 = cost2;
     }
 
-    public Integer getRedisIndex() {
-        return redisIndex;
+    public Integer getRedisGroup() {
+        return redisGroup;
     }
 
-    public void setRedisIndex(Integer redisIndex) {
-        this.redisIndex = redisIndex;
+    public void setRedisGroup(Integer redisGroup) {
+        this.redisGroup = redisGroup;
+    }
+
+    public Integer getRedisDb() {
+        return redisDb;
+    }
+
+    public void setRedisDb(Integer redisDb) {
+        this.redisDb = redisDb;
     }
 
     public Boolean getIsPostback() {
@@ -268,9 +278,10 @@ public class Ads {
                 + ", autostart=" + autostart + ", cost1=" + cost1 + ", cost2=" + cost2 + ", createtime=" + createtime
                 + ", deletetime=" + deletetime + ", description=" + description + ", enddate=" + enddate
                 + ", eventName=" + eventName + ", id=" + id + ", isDelete=" + isDelete + ", isPostback=" + isPostback
-                + ", loopbackdate=" + loopbackdate + ", name=" + name + ", os=" + os + ", redisIndex=" + redisIndex
-                + ", startdate=" + startdate + ", status=" + status + ", supplyDemand=" + supplyDemand
-                + ", trackingUrl=" + trackingUrl + ", type=" + type + ", updatetime=" + updatetime + "]";
+                + ", loopbackdate=" + loopbackdate + ", name=" + name + ", os=" + os + ", redisDb=" + redisDb
+                + ", redisGroup=" + redisGroup + ", startdate=" + startdate + ", status=" + status + ", supplyDemand="
+                + supplyDemand + ", trackingUrl=" + trackingUrl + ", type=" + type + ", updatetime=" + updatetime + "]";
     }
-     
+ 
+    
 }

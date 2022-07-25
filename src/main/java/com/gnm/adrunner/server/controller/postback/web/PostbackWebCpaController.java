@@ -157,7 +157,7 @@ public class PostbackWebCpaController extends RequestResponseInterface{
 
 
         // 클릭키가 존재하지 않는 경우 214 에러
-        if(!redisUtil.findck(token[0], ck, ads.getRedisIndex())){
+        if(redisUtil.findck(ads.getAdsKey(), ck, ads.getRedisGroup(), ads.getRedisDb())){
             return ResponseEntity.status(214)
                 .headers(responseHeaders)
                 .body(getStatusMessage(214));
