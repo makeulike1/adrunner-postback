@@ -155,6 +155,7 @@ public class redisUtil {
             for(String listKey : keysList){
                 System.out.println("[LIST KEYK:"+listKey+"]");
                 Object tmp = redisEntity.getDbList().get(redisDB).opsForList().indexOf(listKey, ck);
+                System.out.println(tmp.toString());
                 if(tmp != null)
                     return true;
             }
