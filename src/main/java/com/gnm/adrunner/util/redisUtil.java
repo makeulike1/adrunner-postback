@@ -139,7 +139,6 @@ public class redisUtil {
 
         RedisGroup currentRedis  = RedisConfig.redisConn.get(redisGroup);
          
-        System.out.println("[DEBUG LOG][REDIS_GROUP:"+redisGroup+"][REDIS_DB:"+redisDB+"]");
         for(int i=0;i<currentRedis.getList().size();i++){
             
             RedisEntity redisEntity = currentRedis.getList().get(i);
@@ -151,11 +150,8 @@ public class redisUtil {
                 keysList.add(it.next());
             }
 
-            System.out.println("[FINDING CK:"+ck+"]");
             for(String listKey : keysList){
-                System.out.println("[LIST KEYK:"+listKey+"]");
                 Object tmp = redisEntity.getDbList().get(redisDB).opsForList().indexOf(listKey, ck);
-                System.out.println(tmp.toString());
                 if(tmp != null)
                     return true;
             }
