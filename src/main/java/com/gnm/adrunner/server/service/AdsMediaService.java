@@ -27,9 +27,6 @@ public class AdsMediaService {
     @Autowired
     AdsRepository adsRepository;
 
-    @Autowired
-    PostbackService postbackService;
-
     @PersistenceContext
 	private EntityManager entityManager;
 
