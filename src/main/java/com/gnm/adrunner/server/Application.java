@@ -31,22 +31,29 @@ public class Application {
 	SystemConfig2Repository systemConfig2Repository;
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
 		for(int i=0;i<args.length;i++){
 			if(i==0)
 				GlobalConstant.RUNNING_MODE = args[i];			
 		}
 
+		// 개발 서버는 dev, 라이브 서버는 release
 		System.out.println("RUNNING MODE : " + GlobalConstant.RUNNING_MODE);
 
-		
 		SpringApplication.run(Application.class, args);
 	}
-
-	 
+ 
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() throws Exception {
+		configureServerHost();
+		configureRedis();
+	}
 
+
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 서버 호스트 초기화
+	public void configureServerHost(){
 		// 관리자 서버 호스트 조회
 		System.out.println("######################################################################");
 		GlobalConstant.SERVER_HOST_ADMIN = serverInstanceRepository.getServerHost(GlobalConstant.SERVER_TYPE_ADMIN);
@@ -59,8 +66,14 @@ public class Application {
 		// 포스트백 서버 호스트 조회
 		GlobalConstant.SERVER_HOST_PBACK = serverInstanceRepository.getServerHost(GlobalConstant.SERVER_TYPE_PBACK);
 		System.out.println("SERVER HOST(POSTBACK) : " 	+ GlobalConstant.SERVER_HOST_PBACK);
+	}
 
-	 
+
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// REDIS 초기화
+	public void configureRedis(){
 		// Redis 그룹 개수 조회
 		if(GlobalConstant.RUNNING_MODE.equals("dev")){
 			GlobalConstant.NUMBER_OF_REDIS_GROUP = 1;
@@ -88,11 +101,12 @@ public class Application {
 
 		System.out.println("######################################################################");
 		System.out.println();
-	
 
-		
 		// Redis 시작
 		RedisConfig.init();
- 
 	}
+	
+ 
+
+ 
 }
