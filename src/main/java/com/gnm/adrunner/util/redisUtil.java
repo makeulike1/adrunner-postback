@@ -139,6 +139,7 @@ public class redisUtil {
 
         RedisGroup currentRedis  = RedisConfig.redisConn.get(redisGroup);
          
+        System.out.println("[DEBUG LOG][REDIS_GROUP:"+redisGroup+"][REDIS_DB:"+redisDB+"]");
         for(int i=0;i<currentRedis.getList().size();i++){
             
             RedisEntity redisEntity = currentRedis.getList().get(i);

@@ -32,6 +32,14 @@ public class Application {
 
 	
 	public static void main(String[] args) {
+		for(int i=0;i<args.length;i++){
+			if(i==0)
+				GlobalConstant.RUNNING_MODE = args[i];			
+		}
+
+		System.out.println("RUNNING MODE : " + GlobalConstant.RUNNING_MODE);
+
+		
 		SpringApplication.run(Application.class, args);
 	}
 
